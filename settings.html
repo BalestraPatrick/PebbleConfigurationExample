@@ -1,0 +1,109 @@
+<html manifest="index.appcache">
+<head>
+	<title>Settings</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	
+	<!-- HEADER -->
+
+	<h4 style="margin-left:25px; padding-bottom:10px">Choose your settings:</h4>
+	
+	<!-- TABLE -->
+	<table>
+		<tr>
+			<td><p style="padding-top:0px; padding-left:25px; vertical-align:middle; display:table-cell;">Choose an option: </p></td>
+			<td><button type='button'class="multipleOption btn btn-default" id="test" style="width:100px; margin-left:20px;">0</button></td>
+		</tr>
+	</table>
+	
+	<p style="text-align:center;">
+		<button type='button' class="submit btn btn-success" style="width:100px; margin-top:20px;">Submit</button>
+	</p>
+		
+	<!-- FOOTER -->
+	<br>
+	<div stlye="width:200px;">
+		<p style="text-align:center;">Made by Patrick Balestra, <a href="http://www.twitter.com/BalestraPatrick" target="_blank">@BalestraPatrick</a></p>
+	</div>
+	
+	<!-- SCRIPTS -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$().ready(function() {
+			window.applicationCache.addEventListener('updateready', onUpdateReady);
+
+			function onUpdateReady() {
+				if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+  					window.location.reload();
+  				}
+			}
+			
+			var dictionary;
+			try {
+				
+				dictionary = JSON.parse(localStorage["dictionary"]);
+			}
+			catch(e) {
+				dictionary = {'test':0};
+			}
+
+			for (option in dictionary) {
+				if(dictionary[option]) {
+				
+					/* OPTION */
+					if (option == "test") {
+						if (dictionary[option] == 0) {
+		        			$("#" + option).html('0');
+		        		} else if (dictionary[option] == 1) {
+		        			$("#" + option).html('1');
+		        		} else if (dictionary[option] == 2) {
+		        			$("#" + option).html('2');
+		        		} else if (dictionary[option] == 3) {
+		        			$("#" + option).html('3');
+		        		} else if (dictionary[option] == 4) {
+		        			$("#" + option).html('4');
+		        		}
+					}
+				
+		        }
+			};
+		    
+		    $(".multipleOption").click(function(){
+		    	var new_val;
+		    	if (dictionary[$(this).attr("id")] >= 4) {
+		    		new_val = 0;
+		    	} else {
+		    		new_val = dictionary[$(this).attr("id")] + 1;
+		    	}
+		        dictionary[$(this).attr("id")] = new_val;
+		        localStorage["dictionary"] = JSON.stringify(dictionary);
+		        
+		    	/* DATE FORMAT */
+		        if ($(this).attr("id") == "test") {
+		        	if (dictionary[$(this).attr("id")] == 0) {
+		        		$(this).html('0');
+		        	} else if (dictionary[$(this).attr("id")] == 1) {
+		        		$(this).html('1');
+		        	} else if (dictionary[$(this).attr("id")] == 2) {
+		        		$(this).html('2');
+		        	} else if (dictionary[$(this).attr("id")] == 3) {
+		        		$(this).html('3');
+		        	} else if (dictionary[$(this).attr("id")] == 4) {
+		        		$(this).html('4');
+		        	}
+		        }
+		    });
+		    
+		    
+		    $('.submit').click(function() {
+		    	console.log(JSON.stringify(dictionary));
+		    	var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(dictionary));
+				window.location.href = location;
+		    });
+		});
+	</script>
+</body>
+</html>

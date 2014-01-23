@@ -1,0 +1,21 @@
+{
+  "uuid": "74014A86-20AB-49E7-AC11-D9D036462266",
+  "shortName": "ConfigurationDemo",
+  "longName": "configuration_demo_patrick_balestra",
+  "companyName": "PatrickBalestra",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": true
+  },
+  "capabilities": [
+    "configurable"
+  ],
+  "appKeys": {
+      "test" : 0
+  },
+  "resources": {
+      "media": [
+      ]
+  }
+}
